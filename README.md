@@ -3,5 +3,5 @@
 ## Harvard X Final Assessment for Section 1
 EDX Course
 
-### You will find the exercises and resolutions on the PDF Linked to this Repo
+### The PDF linked in this repository contains the exercises and their solutions
 Thank you :)
