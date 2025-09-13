@@ -4,6 +4,8 @@ library(tidyverse)
 # CREATED IN RSTUDIO
 # FROM EXERCISE 4 YOU NEED TO USE THE ESOPH DATASET --> in RStudio
 
+# You will find EXPLANATION of the codes in the PDF 
+
 # EXERCISE 1
 # A
 medals <- permutations(8,3)
@@ -52,3 +54,104 @@ meals
 # DATASET "ESOPH" in RStudio!
 
 # 3
+nrow(esoph)
+
+all_cases <- sum(esoph$ncases)
+all_cases
+
+all_controls <- sum(esoph$ncontrols)
+all_controls
+
+# 4 
+# A
+head(esoph$alcgp)
+
+esoph %>%
+dplyr::filter(alcgp== "120+") %>%
+summarize(ncases = sum(ncases), ncontrols = sum(ncontrols)) %>%
+mutate(p_case = ncases / (ncases + ncontrols)) %>%
+pull(p_case)
+
+# B
+
+esoph %>%
+dplyr::filter(alcgp== "0-39g/day") %>%
+summarize(ncases = sum(ncases), ncontrols = sum(ncontrols)) %>%
+mutate(p_case = ncases / (ncases + ncontrols)) %>%
+pull(p_case)
+
+# C
+smoke_case <- esoph %>%
+dplyr::filter(tobgp != "0-9g/day") %>%
+pull(ncases) %>%
+sum()
+smoke_case / all_cases
+
+# D
+smoke_case <- esoph %>%
+dplyr::filter(tobgp != "0-9g/day") %>%
+pull(ncontrols) %>%
+sum()
+smoke_case / all_controls
+
+# 5
+# A
+highest_alc <- subset(esoph, alcgp== "120+")
+highest_alc_cases <- sum(highest_alc$ncases)
+highest_alc_cases
+
+all_cases
+
+45/200
+
+# B
+highest_tab <- subset(esoph, tobgp== "30+")
+highest_tab_cases <- sum(highest_tab$ncases)
+highest_tab_cases
+
+31/200
+
+# C
+highest_tab_alc <- subset(esoph, tobgp== "30+" & alcgp== "120+")
+highest_tab_alc_cases <- sum(highest_tab_alc$ncases)
+highest_tab_alc_cases
+
+10/200
+
+# D
+highest_tab_or_alc_cases <- highest_alc_cases + highest_tab_cases- highest_tab_alc_cases
+highest_tab_or_alc_cases
+
+66/200
+
+# 6
+# A
+high_alc_controls <- esoph %>%
+dplyr::filter(alcgp== "120+") %>%
+pull(ncontrols) %>%
+sum()
+p_control_high_alc <- high_alc_controls/all_controls
+p_control_high_alc
+
+# B
+high_tob_controls <- esoph %>%
+dplyr::filter(tobgp== "30+") %>%
+pull(ncontrols) %>%
+sum()
+p_control_high_tob <- high_tob_controls/all_controls
+p_control_high_tob
+
+# C
+high_alc_tob_controls <- esoph %>%
+dplyr::filter(alcgp== "120+" & tobgp== "30+") %>%
+pull(ncontrols) %>%
+sum()
+p_control_high_alc_tob <- high_alc_tob_controls/all_controls
+p_control_high_alc_tob
+
+# D
+p_control_either_highest <- p_control_high_alc + p_control_high_tob- p_control_high_alc_tob
+p_control_either_highest
+
+# E
+0.33 / p_control_either_highest
