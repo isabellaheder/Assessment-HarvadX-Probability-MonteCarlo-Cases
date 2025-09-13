@@ -4,7 +4,8 @@ library(tidyverse)
 # CREATED IN RSTUDIO
 # FROM EXERCISE 4 YOU NEED TO USE THE ESOPH DATASET --> in RStudio
 
-# You will find EXPLANATION of the codes in the PDF 
+# Explanations for the codes are provided in the PDF
+# This file contains code only!
 
 # EXERCISE 1
 # A
